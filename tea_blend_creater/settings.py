@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import dj_database_url 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,16 +10,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = os.environ.get('SECRET_KEY')
-
-SECRET_KEY = 'django-insecure-#7$c#lc%e3t*bd!bzuv$7lwqa&#kn4tln+6%-k*kgx3mruknvo'
+SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-#7$c#lc%e3t*bd!bzuv$7lwqa&#kn4tln+6%-k*kgx3mruknvo')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = os.environ.get('DEBUG', '0').lower() in ['true', 't', '1']
-DEBUG = True
+DEBUG = 'RENDER' not in os.environ
+#DEBUG = True
 
-#ALLOWED_HOSTS = ['tea-blend-creater-service.onrender.com', 'localhost', '127.0.0.1']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['tea-blend-creater-service.onrender.com', 'localhost', '127.0.0.1']
+#ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -38,6 +37,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -69,12 +69,20 @@ WSGI_APPLICATION = 'tea_blend_creater.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgresql://tea_create_service_db_user:ims9Iu7JqUShRDTeBCC8Fiu128MiE4gR@dpg-d5h99b4hg0os73friksg-a.ohio-postgres.render.com/tea_create_service_db',
+        conn_max_age=600
+    )
 }
+
 
 
 # Password validation
@@ -110,9 +118,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
+STATIC_URL = '/static/'
 
-STATIC_URL = 'static/'
+if not DEBUG:
+    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
+    # and renames the files with unique names for each version to support long-term caching
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGGING = {
     'version': 1,

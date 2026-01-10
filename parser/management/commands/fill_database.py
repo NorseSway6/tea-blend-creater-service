@@ -24,7 +24,7 @@ class Command(BaseCommand):
             
             logger.info(f"find {len(tea_cart_urls)} urls")
             
-            for i, cart_url in enumerate(tea_cart_urls, 1):
+            for i, cart_url in enumerate(tea_cart_urls[:5], 1):
                 try:
                     logger.info(f"parsing: [{i}/{len(tea_cart_urls)}]")
                     
