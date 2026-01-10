@@ -1,0 +1,104 @@
+{% extends "index.html" %}
+
+{% load static %}
+
+{% block title %}Сгенерерованный купаж{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static '/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">
+                        <i class="bi bi-cup-hot me-2"></i>{{ blend.name }}
+                        {% if is_saved %}
+                        <span class="badge bg-light text-success ms-2">Сохранен</span>
+                        {% endif %}
+                    </h3>
+                </div>
+                
+                <div class="card-body">
+                    {% if blend.subtaste %}
+                    <div class="alert alert-info">
+                        <h5>Вкус:</h5>
+                        <p class="mb-0">
+                            <strong>{{ blend.subtaste.name }}</strong> 
+                            ({{ blend.subtaste.base_taste.name }} вкус)
+                        </p>
+                    </div>
+                    {% endif %}
+
+                    <h5 class="mt-4">Чаи в купаже:</h5>
+                    <div class="row">
+                        {% for tea in blend.teas.all %}
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6>{{ tea.name }}</h6>
+                                    <p class="text-muted small mb-2">
+                                        Тип: {{ tea.tea_type }}<br>
+                                        Вкусы: {{ tea.get_tastes }}<br>
+                                        Цена: {{ tea.price }} руб./100г
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if blend.additives.all %}
+                    <h5 class="mt-4">Добавки:</h5>
+                    <div class="row">
+                        {% for additive in blend.additives.all %}
+                        <div class="col-md-4 mb-2">
+                            <div class="card border-success">
+                                <div class="card-body text-center">
+                                    <h6>{{ additive.name }}</h6>
+                                    <p class="text-muted small">
+                                        Совместима с подкатегорией "{{ blend.subtaste.name }}"
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="mt-4 border-top pt-3">
+                        <div class="d-flex gap-3">
+                            {% if not is_saved %}
+                            <form method="post" action="/save/">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    <i class="bi bi-save"></i> Сохранить купаж
+                                </button>
+                            </form> 
+                            <form method="post" action="/regenerate/">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-warning btn-lg">
+                                    <i class="bi bi-arrow-clockwise"></i> Сгенерировать заново
+                                </button>
+                            </form>
+                            {% endif %}                         
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer text-muted">
+                    <small>
+                        <i class="bi bi-calendar"></i> Создан: {{ blend.created_at|date:"d.m.Y H:i" }}
+                        {% if is_saved %}
+                        • <i class="bi bi-check-circle"></i> Сохранен в вашу коллекцию
+                        {% endif %}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

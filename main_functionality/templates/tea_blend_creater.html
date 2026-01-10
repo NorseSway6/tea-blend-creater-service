@@ -1,0 +1,160 @@
+{% extends "index.html" %}
+
+{% load static %}
+
+{% block title %}Создание купажа{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static '/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    {% if error %}
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2"></i>{{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bold text-success mb-3">
+                    <i class="bi bi-cup-hot me-2"></i>Генератор чайного купажа
+                </h1>
+            </div>
+            
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                {% for error in form.non_field_errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <div class="form-container">
+                <form method="POST" action="" id="blendForm">
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        <label for="id_theme" class="form-label">
+                            <i class="bi bi-calendar-event tea-icon me-2"></i>{{ form.theme.label }}
+                            <span class="required-star">*</span>
+                        </label>
+                        {{ form.theme }}
+                        {% if form.theme.errors %}
+                        <div class="errorlist">
+                            {% for error in form.theme.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="id_taste_type" class="form-label">
+                            <i class="bi bi-flower1 tea-icon me-2"></i>{{ form.taste_type.label }}
+                            <span class="required-star">*</span>
+                        </label>
+                        {{ form.taste_type }}
+                        {% if form.taste_type.errors %}
+                        <div class="errorlist">
+                            {% for error in form.taste_type.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">
+                            <i class="bi bi-tree tea-icon me-2"></i>{{ form.tea_type.label }}
+                            <span class="required-star">*</span>
+                        </label>
+                        <div class="row">
+                            {% for choice in form.tea_type %}
+                            <div class="col-md-6 mb-2">
+                                <div class="form-check">
+                                    {{ choice.tag }}
+                                    <label class="form-check-label" for="{{ choice.id_for_label }}">
+                                        {{ choice.choice_label }}
+                                    </label>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col-12">
+                                <div class="alert alert-warning">
+                                    В базе данных пока нет типов чая. Запустите парсер.
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% if form.tea_type.errors %}
+                        <div class="errorlist">
+                            {% for error in form.tea_type.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-check form-switch">
+                            {{ form.no_additives }}
+                            <label class="form-check-label form-label" for="{{ form.no_additives.id_for_label }}">
+                                <i class="bi bi-x-circle tea-icon me-2"></i>{{ form.no_additives.label }}
+                            </label>
+                        </div>
+                        {% if form.no_additives.errors %}
+                        <div class="errorlist">
+                            {% for error in form.no_additives.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="{{ form.price_range.id_for_label }}" class="form-label">
+                            <i class="bi bi-currency-ruble tea-icon me-2"></i>{{ form.price_range.label }}
+                            <span class="required-star">*</span>
+                        </label>
+                        {{ form.price_range }}
+                        <div class="d-flex justify-content-between">
+                            <small>100 руб.</small>
+                            <div class="text-center">
+                                <h4 class="text-success" id="priceValue">{{ price_value }} руб.</h4>
+                                <small class="text-muted">Максимальная стоимость купажа</small>
+                            </div>
+                            <small>3000 руб.</small>
+                        </div>
+                        <div class="form-text">{{ form.price_range.help_text }}</div>
+                        {% if form.price_range.errors %}
+                        <div class="errorlist">
+                            {% for error in form.price_range.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn generate-btn text-white btn-lg">
+                            <i class="bi bi-magic me-2"></i>Сгенерировать купаж
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static '/js/tea_blend_creater.js' %}"></script>
+{% endblock %}

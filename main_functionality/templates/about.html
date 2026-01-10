@@ -1,0 +1,44 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}О проекте{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static '/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="about-hero text-center">
+        <h1 class="display-4 fw-bold mb-4 text-success">
+            <i class="bi bi-info-circle me-3"></i>О проекте
+        </h1>
+        <p class="lead mb-4">
+            Платформа для создания уникальных чайных купажей
+        </p>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <p class="fs-5">
+                    Наш проект сочетает вековые традиции чайной культуры с современными технологиями, 
+                    позволяя каждому создавать идеальные чайные композиции по индивидуальным параметрам.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body p-5">
+                    <h2 class="fw-bold text-center mb-4 text-success">Технологии проекта</h2>
+                    <div class="text-center">
+                        <span class="tech-badge">Django</span>
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Bootstrap 5</span>
+                        <span class="tech-badge">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

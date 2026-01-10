@@ -1,0 +1,49 @@
+{% extends "index.html" %}
+
+{% load static %}
+
+{% block title %}Главная - Чайные купажи{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static '/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="hero-section bg-light rounded-5 p-5 mb-5 text-center">
+    <h1 class="display-4 fw-bold mb-4 text-success">Создайте свой идеальный купаж</h1>
+    <p class="lead mb-4">Алгоритмический подбор оптимальных составов на основе ваших предпочтений</p>
+    <a href="/blend_creater" class="btn generate-btn text-white btn-lg px-4">
+        <i class="bi bi-magic me-2"></i>Начать создание
+    </a>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="bi bi-sliders tea-icon icon-lg" style="font-size: 3rem;"></i>
+                <h3 class="card-title h5 mt-3">Индивидуальный подбор</h3>
+                <p class="card-text">Задайте параметры и алгоритм создаст уникальный рецепт</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="bi bi-database tea-icon icon-lg" style="font-size: 3rem;"></i>
+                <h3 class="card-title h5 mt-3">Большая база ингредиентов</h3>
+                <p class="card-text">Сотни сортов чая и добавок с подробными характеристиками</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="bi bi-calculator tea-icon icon-lg" style="font-size: 3rem;"></i>
+                <h3 class="card-title h5 mt-3">Расчёт стоимости</h3>
+                <p class="card-text">Автоматический расчёт цены готового купажа за 1 унцию</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

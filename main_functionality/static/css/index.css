@@ -1,0 +1,108 @@
+.form-container {
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e9 100%);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.tea-icon {
+    color: #2e7d32;
+    font-size: 1.5rem;
+}
+
+.price-slider {
+    height: 8px;
+    border-radius: 4px;
+}
+    
+.submit-btn, .generate-btn, .btn-success {
+    background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+}
+.submit-btn:hover, .generate-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #2e7d32;
+    margin-bottom: 8px;
+}
+
+.required-star {
+    color: #d32f2f;
+}
+
+.form-check-input:checked {
+    background-color: #2e7d32;
+    border-color: #2e7d32;
+}
+
+.errorlist {
+    list-style: none;
+    padding-left: 0;
+    color: #d32f2f;
+    margin-top: 5px;
+}
+
+.card-title{
+    color: #2e7d32;
+}
+
+.card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+footer {
+    background: linear-gradient(135deg, var(--light-green) 0%, #ffffff 100%);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+    margin-top: auto;
+}
+
+.about-hero, .hero-section {
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e9 100%);
+    border-radius: 20px;
+    padding: 60px 40px;
+    margin-bottom: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+    
+.feature-icon-box {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+}
+    
+.tech-badge {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    border: 2px solid #2e7d32;
+    color: #2e7d32;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 50px;
+    margin: 5px;
+    display: inline-block;
+    transition: all 0.3s;
+}
+    
+.tech-badge:hover {
+    background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
+    color: white;
+    transform: translateY(-3px);
+}
